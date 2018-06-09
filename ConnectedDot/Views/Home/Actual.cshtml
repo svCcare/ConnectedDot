@@ -1,0 +1,71 @@
+﻿@model ConnectedDot.ViewModels.SkillsViewModel
+
+@{
+    ViewBag.Title = "Actual Skills";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<head>
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    <script src="~/Scripts/Accordion.js"></script>
+</head>
+
+<div class="row">
+    <div class="container col-lg-12">
+
+        <table class="table" style="font-size:18px;">
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Category
+                </th>
+                <th>
+                    Level
+                </th>
+                <th>
+                    Notes
+                </th>
+            </tr>
+
+            @foreach (var item in Model.ListOfSkills)
+            {
+                <tr>
+                    <td class="col-lg-2">
+                        <span>@item.Name</span>
+                    </td>
+                    <td class="col-lg-2">
+                        <span>@item.Category</span>
+                        @*@Html.DisplayFor(modelItem => item.Category.Name)*@
+                    </td>
+                    <td class="col-lg-2">
+                        @for (int i = 0; i < item.Level; i++)
+                        {
+                            <span class="glyphicon glyphicon-star"></span>
+                        }
+                        @for (int i = 0; i < 5 - item.Level; i++)
+                        {
+                            <span class="glyphicon glyphicon-star-empty"></span>
+                        }
+                        <span class="glyphicon glyphicon-plus-sign"></span>
+                    </td>
+                    <td class="col-lg-6">
+                        @if (item.Notes != null)
+                        {
+                            <main>
+                                <section>
+                                    <span class="glyphicon glyphicon-comment"></span>
+                                    <p>
+                                        @item.Notes
+                                    </p>
+                                </section>
+                            </main>
+                            
+                        }
+
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>

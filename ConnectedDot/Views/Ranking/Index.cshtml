@@ -1,0 +1,85 @@
+﻿@model ConnectedDot.ViewModels.SkillsViewModel
+
+@{
+    ViewBag.Title = "Skills Ranking";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<head>
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    <script src="~/Scripts/Accordion.js"></script>
+</head>
+
+@using (Html.BeginForm("Index", "Ranking", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+
+
+
+    <div class="container" style="padding-bottom:20px; border:1px solid white; padding-top:10px;">
+        <div class="form-group">
+            @Html.Label("Name of Skill", new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Minimal rating", new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.Level, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" class="btn btn-default" value="Search" />
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div class="row">
+        <div class="container col-lg-12">
+
+            <table class="table" style="font-size:18px;">
+                <tr>
+                    <th>
+                        User Name
+                    </th>
+                    <th>
+                        Skill Name
+                    </th>
+                    <th>
+                        Level
+                    </th>
+                </tr>
+                @if (Model.ListOfSkills != null)
+                {
+                    foreach (var item in Model.ListOfSkills)
+                    {
+                        <tr>
+                            <td class="col-lg-4">
+                                <span>@item.UserName</span>
+                            </td>
+                            <td class="col-lg-4">
+                                <span>@item.Name</span>
+                                @*@Html.DisplayFor(modelItem => item.Category.Name)*@
+                            </td>
+                            <td class="col-lg-4">
+                                @for (int i = 0; i < item.Level; i++)
+                                {
+                                    <span class="glyphicon glyphicon-star"></span>
+                                }
+                                @for (int i = 0; i < 5 - item.Level; i++)
+                                {
+                                    <span class="glyphicon glyphicon-star-empty"></span>
+                                }
+                                <span class="glyphicon glyphicon-plus-sign"></span>
+                            </td>
+                        </tr>
+                    }
+                }
+            </table>
+        </div>
+    </div>
+}
